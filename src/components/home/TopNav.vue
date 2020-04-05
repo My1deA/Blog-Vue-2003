@@ -1,9 +1,22 @@
 <template>
+
     <el-menu :default-active="'/index'" class="el-menu-demo" mode="horizontal" @select="handleSelect" router>
         <el-menu-item v-for="(item,i) in NavList" :key="i" :index="item.name">
             {{item.navItem}}
         </el-menu-item>
+
+        <div>
+            <el-badge is-dot class="item">
+                <el-button type="primary" icon="el-icon-message-solid"></el-button>
+            </el-badge >
+            <el-badge is-dot class="item">
+                <el-button type="primary" icon="el-icon-s-comment"></el-button>
+            </el-badge>
+        </div>
+
     </el-menu>
+
+
 </template>
 
 <script>
@@ -26,3 +39,12 @@
         }
     }
 </script>
+
+
+<style scoped>
+    .item {
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+
+</style>
