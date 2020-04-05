@@ -1,34 +1,37 @@
 <template>
+    <div>
+        <img alt="Vue logo" src="../assets/logo.png">
+        <el-row>
+            <el-col :span="6" :offset="9">
+                <el-card shadow="hover">
+                    <div>login</div>
+                    <br><br>
+                    <el-form :model="loginForm"  :rules="rules" ref="loginForm" status-icon label-width="100px">
+                        <el-form-item label="username" prop="username">
+                            <el-input type="text" v-model="loginForm.username" ></el-input>
+                        </el-form-item>
+                        <el-form-item label="password" prop="password" >
+                            <el-input type="password" v-model="loginForm.password"></el-input>
+                        </el-form-item>
 
-    <el-row>
-        <el-col :span="6" :offset="9">
-            <el-card shadow="hover">
-                <div>login</div>
-                <br><br>
-                <el-form :model="loginForm"  :rules="rules" ref="loginForm" status-icon label-width="100px">
-                    <el-form-item label="username" prop="username">
-                        <el-input type="text" v-model="loginForm.username" ></el-input>
-                    </el-form-item>
-                    <el-form-item label="password" prop="password" >
-                        <el-input type="password" v-model="loginForm.password"></el-input>
-                    </el-form-item>
+                        <el-form-item>
+                            <el-checkbox-group v-model="loginForm.remember" class="checkGroupWide">
+                                <el-checkbox label="记住密码" ></el-checkbox>
+                                <el-checkbox label="自动登录"></el-checkbox>
+                            </el-checkbox-group>
+                        </el-form-item>
 
-                    <el-form-item>
-                        <el-checkbox-group v-model="loginForm.remember" class="checkGroupWide">
-                            <el-checkbox label="记住密码" ></el-checkbox>
-                            <el-checkbox label="自动登录"></el-checkbox>
-                        </el-checkbox-group>
-                    </el-form-item>
-
-                    <el-form-item>
+                        <el-form-item>
                             <el-button type="primary" class="buttonRightWide" v-on:click="login">登录</el-button>
                             <el-button type="primary" class="buttonLeftWide">清除</el-button>
-                    </el-form-item>
-                </el-form>
+                        </el-form-item>
+                    </el-form>
 
-            </el-card>
-        </el-col>
-    </el-row>
+                </el-card>
+            </el-col>
+        </el-row>
+    </div>
+
 
 </template>
 
@@ -78,16 +81,17 @@
         methods: {
             login: function () {
                 //alert(this.loginFrom.username+" "+this.loginFrom.password);
+                var _this = this;
                 this.$axios.post('http://localhost:8080/user/login',
                     this.$qs.stringify({
                         username: this.loginForm.username,
                         password: this.loginForm.password
                     })).then(function (data) {
-                        alert(data.data.code);
-                        var _this = this;
+                        console.log(data.data.message);
+                        //_this.$router.push("/home");
                         _this.$store.commit('login', _this.loginForm);
-                        var path = this.$route.query.redirect;
-                        this.$router.replace({path: path === '/' || path === undefined ? '/home' : path});
+                        var path = _this.$route.query.redirect;
+                        _this.$router.replace({path: path === '/' || path === undefined ? '/home' : path});
                     })
             },
             clear: function () {
