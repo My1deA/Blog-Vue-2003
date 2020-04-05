@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Login from '@/components/Login'
 import Home from '@/components/Home'
 import Index from '@/components/home/Index'
-import Article from "@/components/home/Article";
+import Blog from "@/components/home/Blog";
 import Admin from "@/components/home/Admin";
 import Study from "@/components/home/Study";
 
@@ -15,7 +15,7 @@ export default new Router({
         { path: '/home', name: 'Home', component: Home, redirect: '/index',
           children:[
               {path: '/index', name: 'Index', component: Index},
-              {path: '/article', name: 'Article', component: Article},
+              {path: '/blog', name: 'Blog', component: Blog},
               {path: '/study', name:'Study', component: Study},
               {path: '/admin', name:'Admin', component: Admin}]
         },

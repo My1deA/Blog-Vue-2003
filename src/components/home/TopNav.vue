@@ -1,9 +1,8 @@
 <template>
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-        <el-menu-item index="1">首页</el-menu-item>
-        <el-menu-item index="2">个人博客</el-menu-item>
-        <el-menu-item index="3">学习路线</el-menu-item>
-        <el-menu-item index="4">后台管理</el-menu-item>
+    <el-menu :default-active="'/index'" class="el-menu-demo" mode="horizontal" @select="handleSelect" router>
+        <el-menu-item v-for="(item,i) in NavList" :key="i" :index="item.name">
+            {{item.navItem}}
+        </el-menu-item>
     </el-menu>
 </template>
 
@@ -12,7 +11,12 @@
         name:'TopNav',
         data() {
             return {
-                activeIndex: '1',
+                NavList:[
+                    {name:'/index',navItem:'首页'},
+                    {name:'/blog',navItem: '个人博客'},
+                    {name:'/study',navItem: '学习路线'},
+                    {name:'/admin',navItem: '后台管理'},
+                ]
             };
         },
         methods: {
