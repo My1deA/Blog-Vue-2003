@@ -1,14 +1,16 @@
 <template>
-    <div>个人博客</div>
+    <div>
+        图书推荐
+    </div>
+
 </template>
 
 <script>
     export default {
-        name:'Article'
+        name:'Study'
     }
-
 </script>
 
+<style>
 
-<style scoped>
 </style>

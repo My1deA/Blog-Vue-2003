@@ -1,14 +1,24 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../components/Home'
-import Login from '../components/Login'
+import Login from '@/components/Login'
+import Home from '@/components/Home'
+import Index from '@/components/home/Index'
+import Article from "@/components/home/Article";
+import Admin from "@/components/home/Admin";
+import Study from "@/components/home/Study";
 
 Vue.use(Router);
 
 export default new Router({
     mode:'history',
     routes: [
-        { path: '/home', name: 'Home', component: Home , meta:{requireAuth:true}},
+        { path: '/home', name: 'Home', component: Home, redirect: '/index',
+          children:[
+              {path: '/index', name: 'Index', component: Index},
+              {path: '/article', name: 'Article', component: Article},
+              {path: '/study', name:'Study', component: Study},
+              {path: '/admin', name:'Admin', component: Admin}]
+        },
         { path: '/login', name: 'Login', component: Login },
     ]
 })
