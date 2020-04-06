@@ -15,7 +15,7 @@
         <div class="user">
             <el-dropdown class="item" >
                 <el-button type="primary">
-                    <i class="el-icon-user-solid"></i>user
+                    <i class="el-icon-user-solid"></i> user
                     <i class="el-icon-arrow-down right"></i>
                 </el-button>
                 <el-dropdown-menu slot="dropdown">
@@ -72,7 +72,7 @@
 
     .title{
         position: absolute;
-        margin: 15px 50% 0 40%;
+        margin: 15px 50% 0 35%;
         width: 500px;
         font-family: "Courier New", Courier, monospace;
         font-size: large;
