@@ -8,7 +8,7 @@
                 <index-main></index-main>
             </el-main>
             <el-footer>
-                页脚
+                <index-bottom></index-bottom>
             </el-footer>
         </el-container>
 
@@ -19,11 +19,11 @@
 <script>
     import IndexNav from "@/components/home/index/IndexNav";
     import IndexMain from "@/components/home/index/IndexMain";
-
+    import IndexBottom from "@/components/home/index/IndexBottom";
 
     export default {
         name:'Index',
-        components: { IndexMain, IndexNav}
+        components: {IndexBottom, IndexMain, IndexNav}
     }
 
 </script>

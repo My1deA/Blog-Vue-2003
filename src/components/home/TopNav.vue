@@ -53,7 +53,7 @@
             return {
                 NavList:[
                     {name:'/index',navItem:'首页'},
-                    {name:'/blog',navItem: '个人博客'},
+                    {name:'/article',navItem: '个人博客'},
                     {name:'/study',navItem: '学习路线'},
                     {name:'/admin',navItem: '后台管理'},
                 ]
