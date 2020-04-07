@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Login from '@/components/Login'
 import Home from '@/components/Home'
 import Index from '@/components/home/Index'
-import Blog from "@/components/home/Article";
+import Article from "@/components/home/Article";
 import Admin from "@/components/home/Admin";
 import Study from "@/components/home/Study";
 
