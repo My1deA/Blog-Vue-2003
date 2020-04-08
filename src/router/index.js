@@ -2,42 +2,46 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
 import Home from '@/components/Home'
+import Error from "@/components/Error";
 import Index from '@/components/home/Index'
 import Article from "@/components/home/Article";
-import Admin from "@/components/home/Admin";
 import Study from "@/components/home/Study";
+import Essay from "@/components/home/Essay";
+/**/
+import Admin from "@/components/Admin";
+import AdminArticle from "@/components/admin/AdminArticle";
+import AdminStudy from "@/components/admin/AdminStudy";
+import AdminRole from "@/components/admin/AdminRole";
+import AdminInfo from "@/components/admin/AdminInfo";
 
 Vue.use(Router);
 
 export default new Router({
-    mode:'history',
+    mode: 'history',
     routes: [
-        { path: '/home', name: 'Home', component: Home, redirect: '/index',
-          children:[
-              {path: '/index', name: 'Index', component: Index},
-              {path: '/article', name: 'Article', component: Article},
-              {path: '/study', name:'Study', component: Study},
-              {path: '/admin', name:'Admin', component: Admin}]
+        {path: '/', redirect: '/home'},
+        {path: '/login', name: 'Login', component: Login},
+        {path: '*', name: 'Error', component: Error},
+        {
+            path: '/home', name: 'Home', component: Home, redirect: '/index',
+            children: [
+                {path: '/index', name: 'Index', component: Index},
+                {path: '/article', name: 'Article', component: Article},
+                {path: '/study', name: 'Study', component: Study},
+                {path: '/essay', name: 'Essay', component: Essay},
+            ]
         },
-        { path: '/login', name: 'Login', component: Login },
+        {
+            path: '/admin', name: 'Admin', component: Admin,redirect: '/adminArticle',
+            children: [
+                {path: '/adminArticle', name: 'AdminArticle', component: AdminArticle},
+                {path: '/adminStudy', name: 'AdminStudy', component: AdminStudy},
+                {path: '/adminRole', name: 'AdminRole', component: AdminRole},
+                {path: '/adminInfo', name: 'AdminInfo', component: AdminInfo}]
+        },
+
     ]
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*import Vue from 'vue'

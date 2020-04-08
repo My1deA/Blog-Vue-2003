@@ -1,14 +1,14 @@
 <template>
-    <div>后台管理</div>
+    <div>作者随笔</div>
 </template>
 
 <script>
-    export default{
-        name:'Admin'
+    export default {
+        name:'Essay',
     }
+
 </script>
 
 
 <style scoped>
-
 </style>

@@ -1,13 +1,18 @@
 <template>
-    <div></div>
+    <div>
+        个人信息
+    </div>
 </template>
 
 <script>
     export default {
-        name: "AdminMain"
+        name: 'AdminInfo',
     }
+
 </script>
 
+
 <style scoped>
+
 
 </style>

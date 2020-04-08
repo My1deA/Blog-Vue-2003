@@ -124,7 +124,7 @@
     .main-userInfo {
         position: absolute;
         text-align: left;
-        width: 300px;
+        width: 20%;
         margin: -300px 0 0 10px;
 
     }
@@ -139,6 +139,7 @@
         /*向左对齐*/
         text-align: left;
         margin: 0 0 0 6%;
+        /*900px 77.6%*/
         width: 900px;
     }
 
