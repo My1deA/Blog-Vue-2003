@@ -70,7 +70,7 @@
        font-size: large;
        font-weight: bold;
        color: #F0F0F0;
-       margin: 20px 0 0 700px;
+       margin: 20px 0 0 725px;
     }
 
    .top-user{
