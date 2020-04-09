@@ -70,7 +70,7 @@
 
     .title {
         position: absolute;
-        margin: 15px 0 0 35%;
+        margin: 17px 0 0 35%;
         width: 25%;
         font-family: "Courier New", Courier, monospace;
         font-size: large;

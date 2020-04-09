@@ -9,10 +9,11 @@ import Study from "@/components/home/Study";
 import Essay from "@/components/home/Essay";
 /**/
 import Admin from "@/components/Admin";
-import AdminArticle from "@/components/admin/AdminArticle";
-import AdminStudy from "@/components/admin/AdminStudy";
-import AdminRole from "@/components/admin/AdminRole";
-import AdminInfo from "@/components/admin/AdminInfo";
+import AdminAddArticle from "@/components/admin/main/AdminAddArticle";
+import AdminListArticle from "@/components/admin/main/AdminListArticle";
+import AdminStudy from "@/components/admin/main/AdminStudy";
+import AdminRole from "@/components/admin/main/AdminRole";
+import AdminInfo from "@/components/admin/main/AdminInfo";
 
 Vue.use(Router);
 
@@ -32,9 +33,10 @@ export default new Router({
             ]
         },
         {
-            path: '/admin', name: 'Admin', component: Admin,redirect: '/adminArticle',
+            path: '/admin', name: 'Admin', component: Admin,
             children: [
-                {path: '/adminArticle', name: 'AdminArticle', component: AdminArticle},
+                {path: '/adminAddArticle', name: 'AdminAddArticle', component: AdminAddArticle},
+                {path: '/adminListArticle', name: 'AdminListArticle', component: AdminListArticle},
                 {path: '/adminStudy', name: 'AdminStudy', component: AdminStudy},
                 {path: '/adminRole', name: 'AdminRole', component: AdminRole},
                 {path: '/adminInfo', name: 'AdminInfo', component: AdminInfo}]
