@@ -18,7 +18,7 @@
                 </el-col>
                 <el-col :span="6" >
                     <el-form-item label="发布时间" prop="time">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="form.time" style="width: 100%;"></el-date-picker>
+                        <el-date-picker  type="datetime" placeholder="选择日期时间" value-format="yyyy-MM-dd HH:mm:ss" v-model="form.time" style="width: 100%;"></el-date-picker>
                     </el-form-item>
                 </el-col>
 
@@ -48,7 +48,7 @@
                     <el-option label="回收站" value="recycle"></el-option>
                 </el-select>
                 <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                <el-button>取消</el-button>
+                <el-button @click="onCancal('form')">取消</el-button>
             </el-form-item>
 
         </el-form>
@@ -93,8 +93,8 @@
                     resume: '',
                     content: '',
                     state: '',
-                    user_id:'1',
-                    like: 0,
+                    userId:'2',
+                    priase: 0,
                 },
                 rules:{
                     title:[{validator: validateTitle, trigger:'blur'}],
@@ -108,7 +108,25 @@
         },
         methods: {
             onSubmit() {
-                console.log('submit!');
+                var _this=this;
+                /*alert(_this.form.title+" "+_this.form.type+" "+_this.form.time+" "+_this.form.resume+" "+_this.form.content+" "+
+                    _this.form.state+" "+_this.form.priase+" "+_this.form.userId+" ")*/
+                this.$axios.post("http://localhost:8080/article/add",
+                    {
+                        title:_this.form.title,
+                        type:_this.form.type,
+                        time:_this.form.time,
+                        resume:_this.form.resume,
+                        content:_this.form.content,
+                        state:_this.form.state,
+                        praise:_this.form.priase,
+                        userId:_this.form.userId,
+                    }).then(function (data) {
+                        console.log(data.data.message);
+                })
+            },
+            onCancal: function (form) {
+                this.$refs[form].resetFields();
             }
         }
     }
