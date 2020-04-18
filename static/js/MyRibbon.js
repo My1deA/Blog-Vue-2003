@@ -8,10 +8,10 @@
  **/
 /*jshint -W030 */
 export {
-    MyRibbon,
+    createRibbon,removeRibbon
 }
 
-function MyRibbon() {
+function createRibbon() {
     function attr(node, attr, default_value) {
         return Number(node.getAttribute(attr)) || default_value;
     }
@@ -44,6 +44,7 @@ function MyRibbon() {
     canvas.style.cssText = 'opacity: ' + config.a + ';position:fixed;top:0;left:0;z-index: ' + config.z + ';width:100%;height:100%;pointer-events:none;';
     // create canvas
     document.getElementsByTagName('body')[0].appendChild(canvas);
+    //document.getElementById('app')[0].appendChild(canvas);
 
     function redraw() {
         g2d.clearRect(0, 0, width, height);
@@ -71,4 +72,10 @@ function MyRibbon() {
     document.onclick = redraw;
     document.ontouchstart = redraw;
     redraw();
+}
+
+function removeRibbon() {
+    //getElementsByTagName 获取到对象是 数组
+    var canvas = document.getElementsByTagName('canvas')[0];
+    document.getElementsByTagName('body')[0].removeChild(canvas);
 }

@@ -6,6 +6,12 @@
 </template>
 
 <script>
+
+    // 引入外部静态ribbon.js文件
+    //import {MyRibbon} from "../../static/js/MyRibbon";
+    //在界面渲染的时候调用彩带
+    //MyRibbon();
+
     import TopNav from "@/components/home/TopNav";
 
     export default {

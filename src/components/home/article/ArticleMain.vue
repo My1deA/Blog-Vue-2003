@@ -1,28 +1,25 @@
 <template>
     <div class="div-main">
-        <el-card  class="main-card"  v-for="item in 3" :key="item" >
-            <h4>{{title}}</h4>
+        <el-card  class="main-card"  v-for="(item,index) in data" :key="index" >
+            <h4>{{item.title}}</h4>
             <el-divider content-position="left">
                 <div class="font-info">
-                    <i class="el-icon-user item" >作者id: {{userId}}</i>
-                    <i class="el-icon-folder item"> 分类于: {{type}}</i>
-                    <i class="el-icon-time item">发表于: {{time}}</i>
+                    <i class="el-icon-user item" >作者id: {{item.userId}}</i>
+                    <i class="el-icon-folder item"> 分类于: {{item.type}}</i>
+                    <i class="el-icon-time item">发表于: {{item.time}}</i>
                 </div>
             </el-divider>
             <div class="main-card-resume">
-                <p>{{resume}}</p>
+                <p>{{item.resume}}</p>
             </div>
             <div>
                 <el-link type="primary"  class="main-card-link">阅读全文 <i class="el-icon-d-arrow-right"></i></el-link>
             </div>
         </el-card>
+
         <div class="block">
-            <el-pagination
-                    :current-page="1"
-                    :page-sizes="[3, 5, 10]"
-                    :page-size="3"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="11">
+            <el-pagination :current-page="pageNum" :total="11" :page-size="pageSize"
+                           :page-sizes="[3, 5, 10]" layout="total, sizes, prev, pager, next, jumper" >
             </el-pagination>
         </div>
     </div>
@@ -31,7 +28,9 @@
 
 <script>
     // 引入外部静态ribbon.js文件
-    import {MyRibbon} from "../../../../static/js/MyRibbon";
+    import {createRibbon, removeRibbon} from "../../../../static/js/MyRibbon";
+    //在界面渲染的时候调用彩带 但这样使用会使所有的界面都会自动带上
+    //MyRibbon();removeRibbon();
 
     export default {
         name:'ArticleMain',
@@ -42,12 +41,32 @@
                 type:'Test',
                 time:'2020-04-18 10:30:17',
                 resume:'    简短的留言用于测试数据',
+                data:[],
+                pageNum:1,
+                pageSize:3,
             }
         },
+
+        methods:{
+            loadArticle:function () {
+                var _this=this;
+                _this.$axios.get('http://localhost:8080/list/'+_this.pageNum+"/"+_this.pageSize)
+                    .then(function (data) {
+                        _this.data=data.data;
+                })
+            }
+        },
+
+        //完成界面渲染后挂载
         mounted(){
-            //在界面渲染的时候调用彩带
-            MyRibbon();
+            createRibbon();
+            this.loadArticle();
+        },
+        //销毁的时候调用 让ribbon不会偏移到其他界面
+        destroyed(){
+            removeRibbon();
         }
+
     }
 </script>
 
@@ -67,7 +86,7 @@
     }
     /*文章的内容*/
     .main-card-resume{
-        margin-bottom: 10px;
+        margin-bottom: 30px;
     }
     /*链接的字体大小*/
     .main-card-link{
