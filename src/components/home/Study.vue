@@ -6,8 +6,11 @@
 </template>
 
 <script>
+
     export default {
-        name:'Study'
+        name:'Study',
+        mounted() {
+        }
     }
 </script>
 

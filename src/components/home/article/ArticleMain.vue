@@ -18,8 +18,6 @@
         </el-card>
         <div class="block">
             <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
                     :current-page="1"
                     :page-sizes="[3, 5, 10]"
                     :page-size="3"
@@ -32,6 +30,9 @@
 
 
 <script>
+    // 引入外部静态ribbon.js文件
+    import {MyRibbon} from "../../../../static/js/MyRibbon";
+
     export default {
         name:'ArticleMain',
         data(){
@@ -42,6 +43,10 @@
                 time:'2020-04-18 10:30:17',
                 resume:'    简短的留言用于测试数据',
             }
+        },
+        mounted(){
+            //在界面渲染的时候调用彩带
+            MyRibbon();
         }
     }
 </script>
@@ -58,6 +63,7 @@
     /*文章的list*/
     .main-card{
         margin: 10px auto 50px auto;
+        background: rgba(0,0,0,0);
     }
     /*文章的内容*/
     .main-card-resume{
