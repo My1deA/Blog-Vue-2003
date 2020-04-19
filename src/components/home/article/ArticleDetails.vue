@@ -1,18 +1,15 @@
 <template>
     <div>
-        个人信息
+        文章详情
     </div>
 </template>
 
 <script>
     export default {
-        name: 'AdminInfo',
+        name:'ArticleDetails',
     }
-
 </script>
 
-
 <style scoped>
-
 
 </style>

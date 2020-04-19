@@ -1,16 +1,16 @@
 <template>
     <el-container>
         <el-main>
-            <article-main></article-main>
+            <article-list></article-list>
         </el-main>
     </el-container>
 </template>
 
 <script>
-    import ArticleMain from "@/components/home/article/ArticleMain";
+    import ArticleList from "@/components/home/article/ArticleList";
     export default {
         name:'Article',
-        components: {ArticleMain}
+        components: {ArticleList}
     }
 
 </script>

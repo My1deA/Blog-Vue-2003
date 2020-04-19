@@ -35,14 +35,9 @@
     //MyRibbon();removeRibbon();
 
     export default {
-        name:'ArticleMain',
+        name:'ArticleList',
         data(){
             return{
-                title:'测试标题',
-                userId:'1',
-                type:'Test',
-                time:'2020-04-18 10:30:17',
-                resume:'简短的留言用于测试数据',
                 data:[],
                 pageNum:1,
                 pageSize:3,
@@ -110,7 +105,6 @@
     .main-card-link{
         font-size: 15px;
     }
-
 
     /*字体灰色*/
     .font-info{

@@ -13,7 +13,7 @@ import AdminAddArticle from "@/components/admin/main/AdminAddArticle";
 import AdminListArticle from "@/components/admin/main/AdminListArticle";
 import AdminStudy from "@/components/admin/main/AdminStudy";
 import AdminRole from "@/components/admin/main/AdminRole";
-import AdminInfo from "@/components/admin/main/AdminInfo";
+import AdminUserInfo from "@/components/admin/main/AdminUserInfo";
 
 Vue.use(Router);
 
@@ -39,7 +39,7 @@ export default new Router({
                 {path: '/adminListArticle', name: 'AdminListArticle', component: AdminListArticle},
                 {path: '/adminStudy', name: 'AdminStudy', component: AdminStudy},
                 {path: '/adminRole', name: 'AdminRole', component: AdminRole},
-                {path: '/adminInfo', name: 'AdminInfo', component: AdminInfo}]
+                {path: '/adminUserInfo', name: 'AdminInfo', component: AdminUserInfo}]
         },
 
     ]
