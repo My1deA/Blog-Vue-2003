@@ -27,8 +27,8 @@
         data() {
             return {
                 navList: [
-                    {id: 0, index: '/adminAddArticle', msg: '发布文章'},
-                    {id: 1, index: '/adminListArticle',msg: '文章列表'},
+                    {id: 0, index: '/adminArticleAdd', msg: '发布文章'},
+                    {id: 1, index: '/adminArticleList',msg: '文章列表'},
                     {id: 2, index: '/adminStudy', icon: 'el-icon-notebook-1', msg: '学习路线'},
                     {id: 3, index: '/adminRole', icon: 'el-icon-s-operation', msg: '用户权限'},
                     {id: 4, index: '/adminUserInfo', icon: 'el-icon-user-solid', msg: '个人信息'}

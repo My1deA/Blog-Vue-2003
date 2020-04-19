@@ -10,7 +10,9 @@
     import ArticleList from "@/components/home/article/ArticleList";
     export default {
         name:'Article',
-        components: {ArticleList}
+        components: {ArticleList},
+
+
     }
 
 </script>

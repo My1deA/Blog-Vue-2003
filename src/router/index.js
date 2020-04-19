@@ -1,19 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login'
-import Home from '@/components/Home'
-import Error from "@/components/Error";
-import Index from '@/components/home/Index'
-import Article from "@/components/home/Article";
-import Study from "@/components/home/Study";
-import Essay from "@/components/home/Essay";
+import Login from '@/components/Login';//登录
+import Home from '@/components/Home';//主页
+import Error from "@/components/Error";//错误
+import Index from '@/components/home/Index'//主页-首页
+import Article from "@/components/home/Article";//主页-文章
+import ArticleDetails from "@/components/home/article/ArticleDetails";//主页-文章详情
+import Study from "@/components/home/Study";//主页-学习路线
+import Essay from "@/components/home/Essay";//主页-随笔
 /**/
-import Admin from "@/components/Admin";
-import AdminAddArticle from "@/components/admin/main/AdminAddArticle";
-import AdminListArticle from "@/components/admin/main/AdminListArticle";
-import AdminStudy from "@/components/admin/main/AdminStudy";
-import AdminRole from "@/components/admin/main/AdminRole";
-import AdminUserInfo from "@/components/admin/main/AdminUserInfo";
+import Admin from "@/components/Admin";//管理
+import AdminArticleAdd from "@/components/admin/main/AdminArticleAdd";//管理-文章添加
+import AdminArticleList from "@/components/admin/main/AdminArticleList";//管理-文章列表
+import AdminStudy from "@/components/admin/main/AdminStudy";//管理-学习路线
+import AdminRole from "@/components/admin/main/AdminRole";//管理-角色
+import AdminUserInfo from "@/components/admin/main/AdminUserInfo";//管理-用户信息
+
 
 Vue.use(Router);
 
@@ -28,6 +30,8 @@ export default new Router({
             children: [
                 {path: '/index', name: 'Index', component: Index},
                 {path: '/article', name: 'Article', component: Article},
+                {path: '/article/articleDetaiils/:id', name: 'ArticleDetails', component: ArticleDetails},
+                /*{path: '/article/articleDetails', name: 'ArticleDetails', component: ArticleDetails},*/
                 {path: '/study', name: 'Study', component: Study},
                 {path: '/essay', name: 'Essay', component: Essay},
             ]
@@ -35,8 +39,8 @@ export default new Router({
         {
             path: '/admin', name: 'Admin', component: Admin,
             children: [
-                {path: '/adminAddArticle', name: 'AdminAddArticle', component: AdminAddArticle},
-                {path: '/adminListArticle', name: 'AdminListArticle', component: AdminListArticle},
+                {path: '/adminArticleAdd', name: 'AdminArticleAdd', component: AdminArticleAdd},
+                {path: '/adminArticleList', name: 'AdminArticleList', component: AdminArticleList},
                 {path: '/adminStudy', name: 'AdminStudy', component: AdminStudy},
                 {path: '/adminRole', name: 'AdminRole', component: AdminRole},
                 {path: '/adminUserInfo', name: 'AdminInfo', component: AdminUserInfo}]

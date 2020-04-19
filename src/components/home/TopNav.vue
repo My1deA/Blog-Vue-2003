@@ -1,7 +1,8 @@
 <template>
 
-        <el-menu :default-active="this.$route.path" class="el-menu-demo" mode="horizontal" @select="handleSelect"
-                 router>
+        <el-menu :default-active="currentPath" class="el-menu-demo" mode="horizontal" @select="handleSelect" router>
+
+            <!--首页 个人博客 等等-->
             <el-menu-item v-for="(item,i) in NavList" :key="i" :index="item.index">
                 {{item.navItem}}
             </el-menu-item>
@@ -57,10 +58,25 @@
                 ]
             };
         },
+
+        computed: {
+            currentPath(){
+                //indexof 是从下标 0开始的 e.g.: /a/b
+                var i=this.$route.path.indexOf('/',1);
+                if(i===-1){//没有 /b 直接返回
+                    return this.$route.path
+                }else{// /a/b/c..
+                    return  this.$route.path.substring(0,i);
+                }
+            }
+        },
+
         methods: {
             handleSelect(key, keyPath) {
                 console.log(key, keyPath);
-            }
+            },
+
+
         }
     }
 </script>
