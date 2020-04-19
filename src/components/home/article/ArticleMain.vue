@@ -19,7 +19,9 @@
 
         <div class="block">
             <el-pagination :current-page="pageNum" :total="11" :page-size="pageSize"
-                           :page-sizes="[3, 5, 10]" layout="total, sizes, prev, pager, next, jumper" >
+                           :page-sizes="[3, 5, 10]" layout="total, sizes, prev, pager, next, jumper"
+                           @size-change="pageSizeChange"
+                           @current-change="pageNumChange">
             </el-pagination>
         </div>
     </div>
@@ -40,7 +42,7 @@
                 userId:'1',
                 type:'Test',
                 time:'2020-04-18 10:30:17',
-                resume:'    简短的留言用于测试数据',
+                resume:'简短的留言用于测试数据',
                 data:[],
                 pageNum:1,
                 pageSize:3,
@@ -48,13 +50,29 @@
         },
 
         methods:{
+            //加载文章
             loadArticle:function () {
                 var _this=this;
-                _this.$axios.get('http://localhost:8080/list/'+_this.pageNum+"/"+_this.pageSize)
+                _this.$axios.get('http://localhost:8080/article/list/'+_this.pageNum+"/"+_this.pageSize)
                     .then(function (data) {
                         _this.data=data.data;
                 })
-            }
+            },
+            //当前页面
+            pageNumChange:function (val) {
+                //console.log(`当前页: ${val}`);
+                var _this=this;
+                _this.pageNum=val;
+                console.log(_this.pageNumpage);
+
+            },
+            //每页显示的是
+            pageSizeChange:function (val) {
+                //console.log(`每页 ${val} 条` + this.pageSize);
+                var _this=this;
+                _this.pageSize=val;
+            },
+
         },
 
         //完成界面渲染后挂载
