@@ -17,9 +17,21 @@ Vue.prototype.$qs=qs;
 Vue.config.productionTip = false;
 
 
+new Vue({
+  el: '#app',
+  router,
+  store,
+  render: h => h(App),
+}).$mount('#app');
+
+
+
 //路由遍历 检查是否已经登录
 //to:进入到哪个路由去 from:从哪个路由离开 next:路由的控制参数
 router.beforeEach(function (to, from, next) {
+
+
+  /* 判断是否已经登录*/
   if(to.meta.requestAuth){
     if(store.state.user.username){
       next();
@@ -33,19 +45,6 @@ router.beforeEach(function (to, from, next) {
     next();
   }
 });
-
-
-
-new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App),
-}).$mount('#app');
-
-
-
-
 
 
 

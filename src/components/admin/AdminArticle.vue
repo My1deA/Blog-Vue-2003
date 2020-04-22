@@ -64,7 +64,7 @@
 
 <script>
     export default {
-        name: 'AdminListArticle',
+        name: 'AdminArticle',
         data(){
             return{
                 input:'',   //查询内容

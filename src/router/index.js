@@ -10,17 +10,19 @@ import Study from "@/components/home/Study";//主页-学习路线
 import Essay from "@/components/home/Essay";//主页-随笔
 /**/
 import Admin from "@/components/Admin";//管理
-import AdminArticleAdd from "@/components/admin/main/AdminArticleAdd";//管理-文章添加
-import AdminArticleList from "@/components/admin/main/AdminArticleList";//管理-文章列表
-import AdminStudy from "@/components/admin/main/AdminStudy";//管理-学习路线
-import AdminRole from "@/components/admin/main/AdminRole";//管理-角色
-import AdminUserInfo from "@/components/admin/main/AdminUserInfo";//管理-用户信息
+import AdminArticle from "@/components/admin/AdminArticle";//管理-文章列表
+import AdminArticleAdd from "@/components/admin/AdminArticleAdd";//管理-文章添加
+import AdminArticleEdit from "@/components/admin/AdminArticleEdit";//管理-文章修改
+import AdminStudy from "@/components/admin/AdminStudy";//管理-学习路线
+import AdminRole from "@/components/admin/AdminRole";//管理-角色
+import AdminUserInfo from "@/components/admin/AdminUserInfo";//管理-用户信息
 
 
 Vue.use(Router);
 
 export default new Router({
-    mode: 'history',
+    //mode: 'history',
+    mode: 'hash',
     routes: [
         {path: '/', redirect: '/home'},
         {path: '/login', name: 'Login', component: Login},
@@ -30,8 +32,8 @@ export default new Router({
             children: [
                 {path: '/index', name: 'Index', component: Index},
                 {path: '/article', name: 'Article', component: Article},
-                {path: '/article/articleDetaiils/:id', name: 'ArticleDetails', component: ArticleDetails},
-                /*{path: '/article/articleDetails', name: 'ArticleDetails', component: ArticleDetails},*/
+                {path: '/article/details/:id', name: 'ArticleDetails', component: ArticleDetails},//使用 name params传参
+                /*{path: '/article/details', name: 'ArticleDetails', component: ArticleDetails},*/ //使用 name/path query传参
                 {path: '/study', name: 'Study', component: Study},
                 {path: '/essay', name: 'Essay', component: Essay},
             ]
@@ -39,11 +41,12 @@ export default new Router({
         {
             path: '/admin', name: 'Admin', component: Admin,
             children: [
-                {path: '/adminArticleAdd', name: 'AdminArticleAdd', component: AdminArticleAdd},
-                {path: '/adminArticleList', name: 'AdminArticleList', component: AdminArticleList},
-                {path: '/adminStudy', name: 'AdminStudy', component: AdminStudy},
-                {path: '/adminRole', name: 'AdminRole', component: AdminRole},
-                {path: '/adminUserInfo', name: 'AdminInfo', component: AdminUserInfo}]
+                {path: '/admin/article', name: 'AdminArticle', component: AdminArticle},
+                {path: '/admin/article/add', name: 'AdminArticleAdd', component: AdminArticleAdd},
+                {path: '/admin/article/edit/:id', name: 'AdminArticleEdit', component: AdminArticleEdit},
+                {path: '/admin/study', name: 'AdminStudy', component: AdminStudy},
+                {path: '/admin/role', name: 'AdminRole', component: AdminRole},
+                {path: '/admin/userinfo', name: 'AdminInfo', component: AdminUserInfo}]
         },
 
     ]
