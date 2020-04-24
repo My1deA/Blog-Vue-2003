@@ -1,89 +1,113 @@
 <template>
     <div class="main-layout">
         <!--文章-->
-        <el-card>
-            <!--标题-->
-            <div>
-                <h2>{{title}}</h2>
-            </div>
-            <!--分割线-->
-            <div>
-                <el-divider content-position="center">
-                    <div class="font-info">
-                        <i class="el-icon-user item">作者id: {{userId}}</i>
-                        <i class="el-icon-folder item">分类于: {{type}}</i>
-                        <i class="el-icon-time item">发布于: {{time}}</i>
-                    </div>
-                </el-divider>
-            </div>
-
-            <div class="main-card-layout">
-                <!--简述-->
+        <div>
+            <el-card>
+                <!--标题-->
                 <div>
-                    <el-divider direction="vertical"></el-divider>
-                    <span><b>引言</b></span>
-                    <p class="main-card-content">{{resume}}</p>
+                    <h2>{{title}}</h2>
                 </div>
-                <!--内容-->
+                <!--分割线-->
                 <div>
-                    <el-divider direction="vertical"></el-divider>
-                    <span><b>正文</b></span>
-                    <p class="main-card-content">{{content}}</p>
+                    <el-divider content-position="center">
+                        <div class="font-info">
+                            <i class="el-icon-user item">作者id: {{userId}}</i>
+                            <i class="el-icon-folder item">分类于: {{type}}</i>
+                            <i class="el-icon-time item">发布于: {{time}}</i>
+                        </div>
+                    </el-divider>
                 </div>
-                <!--点赞 评论-->
-                <div class="main-inline">
-                    <el-button type="primary" size="small"><i class="el-icon-caret-top"></i>    赞同</el-button>
-                    <el-button type="primary" size="small" icon="el-icon-caret-bottom"></el-button>
-                    <div class="main-inline main-inline-text-button-layout">
-                        <el-button class="font-info main-card-text-button" type="text" @click="showBox"><i class="el-icon-s-comment"></i>{{ isShow===false?'    评论':'    收起'}}</el-button>
-                        <el-button class="font-info main-card-text-button" type="text"><i class="el-icon-s-promotion"></i>    分享</el-button>
-                        <el-button class="font-info main-card-text-button" type="text"><i class="el-icon-star-on"></i>    收藏</el-button>
-                        <el-button class="font-info main-card-text-button" type="text"><i class="el-icon-question"></i>    疑问</el-button>
-                        <el-button class="font-info main-card-text-button" type="text"><i class="el-icon-more"></i></el-button>
-                    </div>
-                </div><br>
-                <!--评论-->
-                <el-collapse-transition>
-                    <div class="box"  v-show="isShow">
 
+                <div class="main-card-article">
+                    <!--简述-->
+                    <div>
+                        <el-divider direction="vertical"></el-divider>
+                        <span><b>引言</b></span>
+                        <p class="main-card-content">{{resume}}</p>
                     </div>
-                </el-collapse-transition>
-            </div>
-        </el-card>
+                    <!--内容-->
+                    <div>
+                        <el-divider direction="vertical"></el-divider>
+                        <span><b>正文</b></span>
+                        <p class="main-card-content">{{content}}</p>
+                    </div>
+                    <!--点赞 评论-->
+                    <div class="main-inline">
+                        <el-button type="primary" size="small"><i class="el-icon-caret-top"></i> 赞同</el-button>
+                        <el-button type="primary" size="small" icon="el-icon-caret-bottom"></el-button>
+                        <div class="main-inline main-inline-text-button-layout">
+                            <el-button class="font-info main-card-text-button" type="text" @click="showBox"><i
+                                    class="el-icon-s-comment"></i>{{ isShow===false?' 评论':' 收起'}}
+                            </el-button>
+                            <el-button class="font-info main-card-text-button" type="text"><i
+                                    class="el-icon-s-promotion"></i> 分享
+                            </el-button>
+                            <el-button class="font-info main-card-text-button" type="text"><i
+                                    class="el-icon-star-on"></i> 收藏
+                            </el-button>
+                            <el-button class="font-info main-card-text-button" type="text"><i
+                                    class="el-icon-question"></i> 疑问
+                            </el-button>
+                            <el-button class="font-info main-card-text-button" type="text"><i class="el-icon-more"></i>
+                            </el-button>
+                        </div>
+                    </div>
+                    <br>
+                    <!--评论-->
+                    <el-collapse-transition>
+                        <div class="box" v-show="isShow">
+
+                        </div>
+                    </el-collapse-transition>
+                </div>
+            </el-card>
+        </div>
 
         <!--回复-->
-        <el-card>
-            <el-form ref="form" :model="form" label-width="80px">
-                <el-row>
-                    <el-col :span="10" >
-                        <el-form-item label="评论用户：">
-                            <el-input v-model="cName"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="10" :offset="2">
-                        <el-form-item label="评论用户：">
-                            <el-date-picker v-model="cTime" type="datetime" placeholder="选择日期时间">
-                            </el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+        <div class="main-card-comment">
+            <el-card>
+                <el-form class="main-form" ref="commentForm" :model="commentForm" label-width="120px">
+                    <el-row>
+                        <el-col :span="8">
+                            <el-form-item label="评论用户：">
+                                <el-input v-model="commentForm.name"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8" :offset="2">
+                            <el-form-item label="评论时间：">
+                                <el-date-picker v-model="commentForm.time" type="datetime" placeholder="选择日期时间">
+                                </el-date-picker>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
 
-                <el-form-item label="回复内容：">
-                    <el-input type="textarea" v-model="comment"></el-input>
-                </el-form-item>
+                    <el-row>
+                        <el-col :span="20">
+                            <el-form-item label="回复内容：">
+                                <el-input type="textarea" v-model="commentForm.comment" :rows="8"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
 
-                <el-row>
-                    <el-col :span="10" >
-                       <el-button>确定</el-button>
-                    </el-col>
-                    <el-col :span="10" :offset="2">
-                        <el-button>取消</el-button>
-                    </el-col>
-                </el-row>
 
-            </el-form>
+                    <el-row>
+                        <el-col :span="2" :offset="16">
+                            <el-button type="primary">确定</el-button>
+                        </el-col>
+                        <el-col :span="2">
+                            <el-button type="primary">重置</el-button>
+                        </el-col>
+                    </el-row>
 
-        </el-card>
+                </el-form>
+
+            </el-card>
+        </div>
+
+        <!--回到顶部-->
+        <el-backtop target=".page-component__scroll .el-scrollbar__wrap" :bottom="100">
+            <div class="back-top">UP</div>
+        </el-backtop>
     </div>
 </template>
 
@@ -94,8 +118,15 @@
 
         data() {
             return {
-                data: [],
+                data: {},
                 isShow: false,
+                commentForm:{
+                  name:'匿名用户',
+                  time:'',
+                  comment:'',
+                },
+
+                /*测试数据*/
                 title: '测试题目',
                 userId: '2',
                 type: 'test',
@@ -110,17 +141,14 @@
                     + '他在旅途中不断寻找志同道合的伙伴，开始了以成为海贼王为目标的冒险旅程 [11]  。',
                 praise: '2',
 
-                cName:'匿名用户',
-                cTime:'',
-                comment:'',
 
 
             }
         },
 
-        methods:{
-            showBox:function () {
-               this.isShow=!this.isShow;
+        methods: {
+            showBox: function () {
+                this.isShow = !this.isShow;
             }
         }
     }
@@ -135,8 +163,21 @@
         width: 60%;
     }
 
+    /*回复布局*/
+    .main-card-comment {
+        margin: 80px auto 0 auto;
+        text-align: left;
+    }
+
+    /*回复布局*/
+    .main-form {
+        margin: 0 auto;
+        width: 87%;
+    }
+
+
     /*内容布局*/
-    .main-card-layout {
+    .main-card-article {
         margin: 20px auto 0 auto;
         text-align: left;
         width: 87%;
@@ -152,6 +193,12 @@
         zoom: 1;
     }
 
+
+    /*评论 以及 回复*/
+    .box {
+        height: 200px;
+        width: 100%;
+    }
 
     /*一行组件*/
     .main-inline {
@@ -170,14 +217,6 @@
         font-size: 15px;
     }
 
-    /*评论 以及 回复*/
-    .box{
-        height:200px;
-        width: 100%;
-    }
-
-
-
 
     /*字体颜色*/
     .font-info {
@@ -188,6 +227,17 @@
     .item {
         margin-right: 10px;
         margin-left: 10px;
+    }
+
+    /*回到顶部*/
+    .back-top {
+        height: 100%;
+        width: 100%;
+        background-color: #f2f5f6;
+        box-shadow: 0 0 6px rgba(0, 0, 0, .12);
+        text-align: center;
+        line-height: 40px;
+        color: #1989fa;
     }
 
     /*段落空格*/
