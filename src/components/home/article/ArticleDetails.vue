@@ -152,9 +152,9 @@
                         <el-col :span="2">
                             <el-button type="primary" @click="clear('commentForm')">重置</el-button>
                         </el-col>
-                        <el-col :span="2" style="visibility: hidden">
+                       <!-- <el-col :span="2" style="visibility: hidden">
                             <el-button type="primary" @click="submit2">确定</el-button>
-                        </el-col>
+                        </el-col>-->
                     </el-row>
 
                 </el-form>
