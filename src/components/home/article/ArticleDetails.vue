@@ -5,15 +5,15 @@
             <el-card>
                 <!--标题-->
                 <div>
-                    <h2>{{title}}</h2>
+                    <h2>{{data.title}}</h2>
                 </div>
                 <!--分割线-->
                 <div>
                     <el-divider content-position="center">
                         <div class="font-info">
-                            <i class="el-icon-user item">作者id: {{userId}}</i>
-                            <i class="el-icon-folder item">分类于: {{type}}</i>
-                            <i class="el-icon-time item">发布于: {{time}}</i>
+                            <i class="el-icon-user item">作者id: {{data.userId}}</i>
+                            <i class="el-icon-folder item">分类于: {{data.type}}</i>
+                            <i class="el-icon-time item">发布于: {{data.time}}</i>
                         </div>
                     </el-divider>
                 </div>
@@ -23,13 +23,13 @@
                     <div>
                         <el-divider direction="vertical"></el-divider>
                         <span><b>引言</b></span>
-                        <p class="main-article-content">{{resume}}</p>
+                        <p class="main-article-content">{{data.resume}}</p>
                     </div>
                     <!--内容-->
                     <div>
                         <el-divider direction="vertical"></el-divider>
                         <span><b>正文</b></span>
-                        <p class="main-card-content">{{content}}</p>
+                        <p class="main-card-content">{{data.content}}</p>
                     </div>
                     <!--点赞 评论-->
                     <div class="main-inline">
@@ -61,7 +61,7 @@
                                 <!--上文布局-->
                                 <div>
                                     <div class="main-comment-logo">
-                                        <el-image src="https://pic3.zhimg.com/da8e974dc_l.jpg"></el-image>
+                                        <el-image src="https://pic4.zhimg.com/80/v2-e69b64ffc292924e50d8f3e65602e909_720w.jpg"></el-image>
                                     </div>
                                     <div class="main-inline">
                                         <div class="main-comment-from-id">匿名用户</div>
@@ -88,10 +88,10 @@
                                     <!--更多回复-->
                                     <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
                                         <el-form>
-                                            <el-form-item label="活动名称" :label-width="formLabelWidth">
+                                            <el-form-item label="活动名称" :label-width="100">
                                                 <el-input  autocomplete="off"></el-input>
                                             </el-form-item>
-                                            <el-form-item label="活动区域" :label-width="formLabelWidth">
+                                            <el-form-item label="活动区域" :label-width="1000">
                                                 <el-select placeholder="请选择活动区域">
                                                     <el-option label="区域一" value="shanghai"></el-option>
                                                     <el-option label="区域二" value="beijing"></el-option>
@@ -125,7 +125,7 @@
                     <el-row>
                         <el-col :span="8">
                             <el-form-item label="评论用户：" >
-                                <el-input v-model="commentForm.name"></el-input>
+                                <el-input v-model="commentForm.userId" placeholder="匿名用户"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8" :offset="2">
@@ -151,6 +151,9 @@
                         </el-col>
                         <el-col :span="2">
                             <el-button type="primary" @click="clear('commentForm')">重置</el-button>
+                        </el-col>
+                        <el-col :span="2" style="visibility: hidden">
+                            <el-button type="primary" @click="submit2">确定</el-button>
                         </el-col>
                     </el-row>
 
@@ -195,33 +198,19 @@
                     comment:[{validator: validateComment, trigger:'blur' }],
                 },
 
-
                 /*测试数据*/
                 commentForm:{
-                    name:'匿名用户',
+                    userId:'',
                     time:'',
                     content:'',
                 },
 
-                title: '测试题目',
-                userId: '2',
-                type: 'test',
-                time: '2020-04-22 15:49:04',
-                resume: '更新Github的项目的Readme',
-                content: '  基于Nathaniel Rich在《纽约时报》上发表的文章《The Lawyer Who Became DuPont’s Worst Nightmare》，'
-                    + '围绕罗伯特·比洛特展开，他担任辩护律师长达8年之久，他对化工巨头杜邦公司提起了环境诉讼，这场官司揭露了几十年来杜邦公司化学污染的历史'
-                    + '拥有财富、名声、权力，这世界上的一切的男人 “海贼王”哥尔·D·罗杰，在被行刑受死之前说了一句话，让全世界的人都涌向了大海。“想要我的宝藏吗？'
-                    + '如果想要的话，那就到海上去找吧，我全部都放在那里。”，世界开始迎接“大海贼时代”的来临 [10] '
-                    + '时值“大海贼时代”，为了寻找传说中海贼王罗杰所留下的大秘宝“ONE PIECE”，无数海贼扬起旗帜，互相争斗。有一个梦想成为海贼王的少年叫路飞，'
-                    + '他因误食“恶魔果实”而成为了橡皮人，在获得超人能力的同时付出了一辈子无法游泳的代价。十年后，路飞为实现与因救他而断臂的香克斯的约定而出海，'
-                    + '他在旅途中不断寻找志同道合的伙伴，开始了以成为海贼王为目标的冒险旅程 [11]  。',
-                praise: '2',
-
-
-
-
             }
 
+        },
+
+        mounted: function () {
+            this.loadArticle();
         },
 
         methods: {
@@ -229,16 +218,11 @@
             /*获取后端相应文章*/
             loadArticle: function(){
                 var _this=this;
-                _this.$axios.get("http://localhost:8080/article/"+_this.$route.params.id)
+                _this.$axios.get("http://localhost:8080/article/details/"+_this.$route.params.id)
                     .then(function (data) {
                         console.log(data.data);
+                        _this.data=data.data.data;
                     })
-            },
-
-            /*展示评论*/
-            showBox: function () {
-                var _this=this;
-                _this.isShow = !_this.isShow;
             },
 
             /*提交评论*/
@@ -247,18 +231,40 @@
                 _this.$axios.post("http://localhost:8080/comment/add",{
                     articleId:12,
                     userId:1,
-                    content:_this.commentForm.comment,
+                    content:_this.commentForm.content,
                     time:_this.commentForm.time,
                 }).then(function (data) {
                     console.log(data.data.message);
                 });
             },
 
+
+            /*展示评论*/
+            showBox: function () {
+                var _this=this;
+                _this.isShow = !_this.isShow;
+            },
+
             /*清除输入*/
             clear: function (form) {
                 this.$refs[form].resetField();
             },
-        }
+
+            /*qs 提交评论*/
+            submit2: function () {
+                var _this=this;
+                _this.$axios.post("http://localhost:8080/comment/add2",this.$qs.stringify({
+                    articleId:12,
+                    userId:_this.commentForm.userId,
+                    content:_this.commentForm.content,
+                    time:_this.commentForm.time,
+                })).then(function (data) {
+                    console.log(data.data.message);
+                });
+            },
+        },
+
+
     }
 </script>
 

@@ -13,7 +13,7 @@
                 <p>{{item.resume}}</p>
             </div>
             <div>
-                <el-link type="primary"  class="main-card-link">阅读全文 <i class="el-icon-d-arrow-right"></i></el-link>
+                <router-link class="main-card-link" :to="{name:'ArticleDetails',params:{id: item.id}}">阅读全文 <i class="el-icon-d-arrow-right"></i></router-link>
             </div>
         </el-card>
 
@@ -24,7 +24,7 @@
                            @current-change="pageNumChange">
             </el-pagination>
         </div>
-        <router-link :to="{name:'ArticleDetails',params:{id: 1}}"><p>阅读更多</p></router-link>
+       <!-- <router-link :to="{name:'ArticleDetails',params:{id: 1}}"><p>阅读更多</p></router-link>-->
         <!--<router-link :to="{path:'/article/articleDetails',query:{id: 1}}"><p>阅读更多</p></router-link>-->
 
     </div>
@@ -107,7 +107,17 @@
     /*链接的字体大小*/
     .main-card-link{
         font-size: 15px;
+        color: #545c64;
     }
+    /*router-link 会最终解析为 a标签*/
+    a,a:active{
+        text-decoration: none;
+    }
+    a:hover{
+        color: #1989fa;
+        border-bottom: 1px solid #1989fa;
+    }
+
 
     /*字体灰色*/
     .font-info{
@@ -117,6 +127,7 @@
     .item{
         margin-right: 15px;
     }
+
 
 
 </style>
