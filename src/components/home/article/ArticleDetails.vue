@@ -18,12 +18,12 @@
                     </el-divider>
                 </div>
 
-                <div class="main-card-article">
+                <div class="main-article">
                     <!--简述-->
                     <div>
                         <el-divider direction="vertical"></el-divider>
                         <span><b>引言</b></span>
-                        <p class="main-card-content">{{resume}}</p>
+                        <p class="main-article-content">{{resume}}</p>
                     </div>
                     <!--内容-->
                     <div>
@@ -35,46 +35,77 @@
                     <div class="main-inline">
                         <el-button type="primary" size="small"><i class="el-icon-caret-top"></i> 赞同</el-button>
                         <el-button type="primary" size="small" icon="el-icon-caret-bottom"></el-button>
-                        <div class="main-inline main-inline-text-button-layout">
-                            <el-button class="font-info main-card-text-button" type="text" @click="showBox"><i
+                        <div class="main-inline text-button-layout">
+                            <el-button class="font-info main-text-button" type="text" @click="showBox"><i
                                     class="el-icon-s-comment"></i>{{ isShow===false?' 评论':' 收起'}}
                             </el-button>
-                            <el-button class="font-info main-card-text-button" type="text"><i
+                            <el-button class="font-info main-text-button" type="text"><i
                                     class="el-icon-s-promotion"></i> 分享
                             </el-button>
-                            <el-button class="font-info main-card-text-button" type="text"><i
+                            <el-button class="font-info main-text-button" type="text"><i
                                     class="el-icon-star-on"></i> 收藏
                             </el-button>
-                            <el-button class="font-info main-card-text-button" type="text"><i
+                            <el-button class="font-info main-text-button" type="text"><i
                                     class="el-icon-question"></i> 疑问
                             </el-button>
-                            <el-button class="font-info main-card-text-button" type="text"><i class="el-icon-more"></i>
+                            <el-button class="font-info main-text-button" type="text"><i class="el-icon-more"></i>
                             </el-button>
                         </div>
                     </div>
                     <br>
                     <!--评论-->
-                    <el-collapse-transition>
-                        <div class="box" v-show="isShow">
+                   <el-collapse-transition>
+                        <div class="box"  v-show="isShow">
 
+                            <div v-for="(item,i) in 3" :key="i">
+                                <!--上文布局-->
+                                <div>
+                                    <div class="main-comment-from-id">匿名用户</div>
+                                    <div class="main-comment-time">2020-04-25 11:13:31</div>
+                                </div>
+
+                                <!--内容-->
+                                <div class="main-comment-content-layout">
+                                    <!--主体-->
+                                    <p>多看看篮球足球就明白了，选手和经纪人都是唱双簧的，你要说文学圈里有可能作家被经纪人蒙骗我还信，职业选手关于转会的事，
+                                        还是自己亲人，一点都不知道？ning直播说了阿水自己试训了几乎所有队伍，你觉得他是真啥也不知道去的吗？多看看世界，行吧
+                                    </p>
+
+                                    <div>
+                                        <el-button class="main-inline font-info" type="text"><i class="el-icon-caret-top mini-item"></i>赞同</el-button>
+                                        <el-button class="main-inline font-info" type="text"><i class="el-icon-caret-bottom mini-item"></i>反对</el-button>
+                                        <el-button class="main-inline font-info" type="text"><i class="el-icon-chat-line-square mini-item"></i>回复</el-button>
+                                        <el-button class="main-inline font-info" type="text"><i class="el-icon-s-flag mini-item"></i>举报</el-button>
+                                        <el-button class="main-inline font-info" type="text">展开其他回复...</el-button>
+                                    </div>
+
+                                </div>
+                                <el-divider></el-divider>
+                            </div>
                         </div>
                     </el-collapse-transition>
+
+                   <!--<transition name="draw">
+                        <div class="box"  v-show="isShow">
+                            <div style="height: 500px"></div>
+                        </div>
+                    </transition>-->
                 </div>
             </el-card>
         </div>
 
         <!--回复-->
-        <div class="main-card-comment">
+        <div class="main-comment-submit">
             <el-card>
-                <el-form class="main-form" ref="commentForm" :model="commentForm" label-width="120px">
+                <el-form class="main-comment-form" ref="commentForm"  :rules="rules" :model="commentForm" label-width="120px">
                     <el-row>
                         <el-col :span="8">
-                            <el-form-item label="评论用户：">
+                            <el-form-item label="评论用户：" >
                                 <el-input v-model="commentForm.name"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8" :offset="2">
-                            <el-form-item label="评论时间：">
+                            <el-form-item label="评论时间：" prop="time">
                                 <el-date-picker v-model="commentForm.time" type="datetime" placeholder="选择日期时间">
                                 </el-date-picker>
                             </el-form-item>
@@ -83,8 +114,8 @@
 
                     <el-row>
                         <el-col :span="20">
-                            <el-form-item label="回复内容：">
-                                <el-input type="textarea" v-model="commentForm.comment" :rows="8"></el-input>
+                            <el-form-item label="回复内容：" prop="comment">
+                                <el-input type="textarea" v-model="commentForm.content" :rows="8"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -92,10 +123,10 @@
 
                     <el-row>
                         <el-col :span="2" :offset="16">
-                            <el-button type="primary">确定</el-button>
+                            <el-button type="primary" @click="submit">确定</el-button>
                         </el-col>
                         <el-col :span="2">
-                            <el-button type="primary">重置</el-button>
+                            <el-button type="primary" @click="clear('commentForm')">重置</el-button>
                         </el-col>
                     </el-row>
 
@@ -105,7 +136,7 @@
         </div>
 
         <!--回到顶部-->
-        <el-backtop target=".page-component__scroll .el-scrollbar__wrap" :bottom="100">
+        <el-backtop :bottom="100">
             <div class="back-top">UP</div>
         </el-backtop>
     </div>
@@ -117,13 +148,26 @@
         name: 'ArticleDetails',
 
         data() {
+            var validateTime = function(rule,value,callback){
+                if(value === ''){
+                    return callback(new Error('请填写回答时间'));
+                }
+                return callback();
+            };
+            var validateComment = function (rule,value,callback) {
+                if(value === ''){
+                    return callback(new Error('请填写评论'));
+                }
+                return callback();
+            };
+
             return {
                 data: {},
                 isShow: false,
                 commentForm:{
                   name:'匿名用户',
                   time:'',
-                  comment:'',
+                  content:'',
                 },
 
                 /*测试数据*/
@@ -142,20 +186,54 @@
                 praise: '2',
 
 
+                rules:{
+                    time:[{validator: validateTime, trigger: 'blur'}],
+                    comment:[{validator: validateComment, trigger:'blur' }],
+                }
 
             }
+
         },
 
         methods: {
+
+            /*获取后端相应文章*/
+            loadArticle: function(){
+                var _this=this;
+                _this.$axios.get("http://localhost:8080/article/"+_this.$route.params.id)
+                    .then(function (data) {
+                        console.log(data.data);
+                    })
+            },
+
+            /*展示评论*/
             showBox: function () {
-                this.isShow = !this.isShow;
-            }
+                var _this=this;
+                _this.isShow = !_this.isShow;
+            },
+
+            /*提交评论*/
+            submit: function () {
+                var _this=this;
+                _this.$axios.post("http://localhost:8080/comment/add",{
+                    articleId:12,
+                    userId:1,
+                    content:_this.commentForm.comment,
+                    time:_this.commentForm.time,
+                }).then(function (data) {
+                    console.log(data.data.message);
+                });
+            },
+
+            /*清除输入*/
+            clear: function (form) {
+                this.$refs[form].resetField();
+            },
         }
     }
 </script>
 
 <style scoped>
-
 
     /*主界面布局*/
     .main-layout {
@@ -163,28 +241,15 @@
         width: 60%;
     }
 
-    /*回复布局*/
-    .main-card-comment {
-        margin: 80px auto 0 auto;
-        text-align: left;
-    }
-
-    /*回复布局*/
-    .main-form {
-        margin: 0 auto;
-        width: 87%;
-    }
-
-
     /*内容布局*/
-    .main-card-article {
+    .main-article {
         margin: 20px auto 0 auto;
         text-align: left;
         width: 87%;
     }
 
     /*内容*/
-    .main-card-content {
+    .main-article-content {
         font-size: 16px;
         word-wrap: break-word;
         color: #333;
@@ -193,28 +258,59 @@
         zoom: 1;
     }
 
-
-    /*评论 以及 回复*/
+    /*评论 */
     .box {
-        height: 200px;
+        margin:20px auto 30px auto;
         width: 100%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
     }
+
+    /*评论具体*/
+    .main-comment-logo{
+        display: inline-block;
+    }
+
+    .main-comment-from-id{
+        display: inline-block;
+        margin: 10px 0 0 20px;
+    }
+    .main-comment-time{
+        display: inline-block;
+        margin: 10px 10px 0 700px;
+        color: gray;
+    }
+    .main-comment-content-layout{
+        margin: 0 50px 0 50px ;
+    }
+
 
     /*一行组件*/
     .main-inline {
-        display: inline;
+        display: inline-block;
     }
 
     /*按钮*/
-    .main-inline-text-button-layout {
+    .text-button-layout {
         margin-left: 10px;
     }
 
     /*按钮*/
-    .main-card-text-button {
+    .main-text-button {
         margin-right: 20px;
         margin-left: 20px;
         font-size: 15px;
+    }
+
+    /*提交评论布局*/
+    .main-comment-submit {
+        margin: 65px auto 0 auto;
+        text-align: left;
+    }
+
+    /*提交评论布局*/
+    .main-comment-form {
+        margin: 0 auto;
+        width: 87%;
     }
 
 
@@ -228,6 +324,10 @@
         margin-right: 10px;
         margin-left: 10px;
     }
+    .mini-item {
+        margin-right:6px;
+    }
+
 
     /*回到顶部*/
     .back-top {
@@ -243,6 +343,14 @@
     /*段落空格*/
     p {
         text-indent: 2em;
+    }
+
+    /*定义Box*/
+    .draw-enter-active, .draw-leave-active {
+        transition: all 1s ease;
+    }
+    .draw-enter, .draw-leave-to {
+        height: 0;
     }
 
 
