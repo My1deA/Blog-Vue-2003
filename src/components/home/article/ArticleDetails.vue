@@ -60,8 +60,14 @@
                             <div v-for="(item,i) in 3" :key="i">
                                 <!--上文布局-->
                                 <div>
-                                    <div class="main-comment-from-id">匿名用户</div>
-                                    <div class="main-comment-time">2020-04-25 11:13:31</div>
+                                    <div class="main-comment-logo">
+                                        <el-image src="https://pic3.zhimg.com/da8e974dc_l.jpg"></el-image>
+                                    </div>
+                                    <div class="main-inline">
+                                        <div class="main-comment-from-id">匿名用户</div>
+                                        <div class="main-comment-time">2020-04-25 11:13:31</div>
+                                    </div>
+
                                 </div>
 
                                 <!--内容-->
@@ -76,9 +82,27 @@
                                         <el-button class="main-inline font-info" type="text"><i class="el-icon-caret-bottom mini-item"></i>反对</el-button>
                                         <el-button class="main-inline font-info" type="text"><i class="el-icon-chat-line-square mini-item"></i>回复</el-button>
                                         <el-button class="main-inline font-info" type="text"><i class="el-icon-s-flag mini-item"></i>举报</el-button>
-                                        <el-button class="main-inline font-info" type="text">展开其他回复...</el-button>
+                                        <el-button class="main-inline font-info" type="text" @click="dialogFormVisible = true">展开其他回复...</el-button>
                                     </div>
 
+                                    <!--更多回复-->
+                                    <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+                                        <el-form>
+                                            <el-form-item label="活动名称" :label-width="formLabelWidth">
+                                                <el-input  autocomplete="off"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="活动区域" :label-width="formLabelWidth">
+                                                <el-select placeholder="请选择活动区域">
+                                                    <el-option label="区域一" value="shanghai"></el-option>
+                                                    <el-option label="区域二" value="beijing"></el-option>
+                                                </el-select>
+                                            </el-form-item>
+                                        </el-form>
+                                        <div slot="footer" class="dialog-footer">
+                                            <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                                        </div>
+                                    </el-dialog>
                                 </div>
                                 <el-divider></el-divider>
                             </div>
@@ -163,14 +187,22 @@
 
             return {
                 data: {},
-                isShow: false,
-                commentForm:{
-                  name:'匿名用户',
-                  time:'',
-                  content:'',
+                isShow: false,//评论
+                dialogFormVisible: false,//更多回复
+                //规则
+                rules:{
+                    time:[{validator: validateTime, trigger: 'blur'}],
+                    comment:[{validator: validateComment, trigger:'blur' }],
                 },
 
+
                 /*测试数据*/
+                commentForm:{
+                    name:'匿名用户',
+                    time:'',
+                    content:'',
+                },
+
                 title: '测试题目',
                 userId: '2',
                 type: 'test',
@@ -186,10 +218,7 @@
                 praise: '2',
 
 
-                rules:{
-                    time:[{validator: validateTime, trigger: 'blur'}],
-                    comment:[{validator: validateComment, trigger:'blur' }],
-                }
+
 
             }
 
@@ -264,20 +293,23 @@
         width: 100%;
         box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
     }
-
     /*评论具体*/
     .main-comment-logo{
-        display: inline-block;
-    }
-
-    .main-comment-from-id{
-        display: inline-block;
+        float: left;
         margin: 10px 0 0 20px;
+        width: 32px;
+        height: 32px;
+    }
+    .main-comment-from-id{
+        float: left;
+        margin: 20px 0 0 10px;
+        font-size: 15px;
     }
     .main-comment-time{
-        display: inline-block;
-        margin: 10px 10px 0 700px;
+        float: right;
+        margin: 20px 10px 0 650px;
         color: gray;
+        font-size: 14px;
     }
     .main-comment-content-layout{
         margin: 0 50px 0 50px ;
