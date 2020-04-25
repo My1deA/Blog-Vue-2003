@@ -1,24 +1,18 @@
-# blogfront1
+# blogfron1
 
-## Project setup
-```
-npm install
-```
+#### 介绍
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+#### 软件架构
 
-### Lints and fixes files
-```
-npm run lint
-```
+  
+#### 安装教程
+ 
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+#### 使用说明
+  
+
+#### 参与贡献
+
+
+#### 附录
