@@ -37,7 +37,7 @@
                         <el-button type="primary" size="small" icon="el-icon-caret-bottom"></el-button>
                         <div class="main-inline text-button-layout">
                             <el-button class="font-info main-text-button" type="text" @click="showBox"><i
-                                    class="el-icon-s-comment"></i>{{ isShow===false?' 评论':' 收起'}}
+                                    class="el-icon-s-comment"></i>{{ boxCommentVisiable===false?' 评论':' 收起'}}
                             </el-button>
                             <el-button class="font-info main-text-button" type="text"><i
                                     class="el-icon-s-promotion"></i> 分享
@@ -55,7 +55,7 @@
                     <br>
                     <!--评论-->
                    <el-collapse-transition>
-                        <div class="box"  v-show="isShow">
+                        <div class="box"  v-show="boxCommentVisiable">
 
                             <div v-for="(item,i) in 3" :key="i">
                                 <!--上文布局-->
@@ -64,8 +64,8 @@
                                         <el-image src="https://pic4.zhimg.com/80/v2-e69b64ffc292924e50d8f3e65602e909_720w.jpg"></el-image>
                                     </div>
                                     <div class="main-inline">
-                                        <div class="main-comment-from-id">匿名用户</div>
-                                        <div class="main-comment-time">2020-04-25 11:13:31</div>
+                                        <div class="main-comment-from-id">匿名用户 </div>
+                                        <div class="main-comment-time">2020-04-29 16:05:29</div>
                                     </div>
 
                                 </div>
@@ -73,36 +73,23 @@
                                 <!--内容-->
                                 <div class="main-comment-content-layout">
                                     <!--主体-->
-                                    <p>多看看篮球足球就明白了，选手和经纪人都是唱双簧的，你要说文学圈里有可能作家被经纪人蒙骗我还信，职业选手关于转会的事，
-                                        还是自己亲人，一点都不知道？ning直播说了阿水自己试训了几乎所有队伍，你觉得他是真啥也不知道去的吗？多看看世界，行吧
-                                    </p>
+                                    <p>JetBrains may use cookies and my IP address to
+                                        collect individual statistics and to provide me with
+                                        personalized offers and ads subject to the Privacy
+                                        Policy and the Terms of Use. JetBrains may use
+                                        third-party services for this purpose. I can revoke
+                                        my consent at any time by visiting the Opt-Out page.</p>
 
                                     <div>
                                         <el-button class="main-inline font-info" type="text"><i class="el-icon-caret-top mini-item"></i>赞同</el-button>
                                         <el-button class="main-inline font-info" type="text"><i class="el-icon-caret-bottom mini-item"></i>反对</el-button>
                                         <el-button class="main-inline font-info" type="text"><i class="el-icon-chat-line-square mini-item"></i>回复</el-button>
                                         <el-button class="main-inline font-info" type="text"><i class="el-icon-s-flag mini-item"></i>举报</el-button>
-                                        <el-button class="main-inline font-info" type="text" @click="dialogFormVisible = true">展开其他回复...</el-button>
+                                        <el-button class="main-inline font-info" type="text" @click="dialogReplyVisible = true">展开其他回复...</el-button>
                                     </div>
 
-                                    <!--更多回复-->
-                                    <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
-                                        <el-form>
-                                            <el-form-item label="活动名称" :label-width="100">
-                                                <el-input  autocomplete="off"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="活动区域" :label-width="1000">
-                                                <el-select placeholder="请选择活动区域">
-                                                    <el-option label="区域一" value="shanghai"></el-option>
-                                                    <el-option label="区域二" value="beijing"></el-option>
-                                                </el-select>
-                                            </el-form-item>
-                                        </el-form>
-                                        <div slot="footer" class="dialog-footer">
-                                            <el-button @click="dialogFormVisible = false">取 消</el-button>
-                                            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-                                        </div>
-                                    </el-dialog>
+                                    <!--部分回复列表-->
+
                                 </div>
                                 <el-divider></el-divider>
                             </div>
@@ -118,7 +105,14 @@
             </el-card>
         </div>
 
-        <!--回复-->
+        <!--更多回复-->
+        <el-dialog title="HelloWorld" :visible.sync="dialogReplyVisible">
+            HelloWorld
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        </el-dialog>
+
+        <!--评论提交-->
         <div class="main-comment-submit">
             <el-card>
                 <el-form class="main-comment-form" ref="commentForm"  :rules="rules" :model="commentForm" label-width="120px">
@@ -190,19 +184,22 @@
 
             return {
                 data: {},
-                isShow: false,//评论
-                dialogFormVisible: false,//更多回复
-                //规则
-                rules:{
-                    time:[{validator: validateTime, trigger: 'blur'}],
-                    comment:[{validator: validateComment, trigger:'blur' }],
-                },
+                commentData:[],//评论列表
+                replyData:{},//单个评论的所有回复
+                boxCommentVisiable: false,//评论
+                dialogReplyVisible: false,//更多回复
 
-                /*测试数据*/
+                //提交评论数据
                 commentForm:{
                     userId:'',
                     time:'',
                     content:'',
+                },
+
+                //规则
+                rules:{
+                    time:[{validator: validateTime, trigger: 'blur'}],
+                    comment:[{validator: validateComment, trigger:'blur' }],
                 },
 
             }
@@ -225,6 +222,30 @@
                     })
             },
 
+            /*展示评论*/
+            showBox: function () {
+                var _this=this;
+                _this.boxCommentVisiable = !_this.boxCommentVisiable;
+            },
+
+            /*获取后端相应部分评论以及回复*/
+            loadComment: function(){
+                var _this=this;
+                _this.$axios.get("http://localhost:8080/comment/"+_this.$route.params.id+"/1/3")
+                    .then(function (data) {
+                        _this.commentData=data.data.data;
+                    });
+            },
+            /*获取一个评论的所有回复信息*/
+            loadReply:function(id){
+                var _this=this;
+                _this.$axios.get("http://localhost:8080/comment/"+id)
+                    .then(function (data) {
+                        _this.replyData=data.data.data;
+                    })
+            },
+
+
             /*提交评论*/
             submit: function () {
                 var _this=this;
@@ -236,13 +257,6 @@
                 }).then(function (data) {
                     console.log(data.data.message);
                 });
-            },
-
-
-            /*展示评论*/
-            showBox: function () {
-                var _this=this;
-                _this.isShow = !_this.isShow;
             },
 
             /*清除输入*/
