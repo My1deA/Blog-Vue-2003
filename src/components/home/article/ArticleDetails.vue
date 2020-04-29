@@ -5,15 +5,15 @@
             <el-card>
                 <!--标题-->
                 <div>
-                    <h2>{{data.title}}</h2>
+                    <h2>{{articleData.title}}</h2>
                 </div>
                 <!--分割线-->
                 <div>
                     <el-divider content-position="center">
                         <div class="font-info">
-                            <i class="el-icon-user item">作者id: {{data.userId}}</i>
-                            <i class="el-icon-folder item">分类于: {{data.type}}</i>
-                            <i class="el-icon-time item">发布于: {{data.time}}</i>
+                            <i class="el-icon-user item">作者id: {{articleData.userId}}</i>
+                            <i class="el-icon-folder item">分类于: {{articleData.type}}</i>
+                            <i class="el-icon-time item">发布于: {{articleData.time}}</i>
                         </div>
                     </el-divider>
                 </div>
@@ -23,13 +23,13 @@
                     <div>
                         <el-divider direction="vertical"></el-divider>
                         <span><b>引言</b></span>
-                        <p class="main-article-content">{{data.resume}}</p>
+                        <p class="main-article-content">{{articleData.resume}}</p>
                     </div>
                     <!--内容-->
                     <div>
                         <el-divider direction="vertical"></el-divider>
                         <span><b>正文</b></span>
-                        <p class="main-card-content">{{data.content}}</p>
+                        <p class="main-card-content">{{articleData.content}}</p>
                     </div>
                     <!--点赞 评论-->
                     <div class="main-inline">
@@ -57,15 +57,15 @@
                    <el-collapse-transition>
                         <div class="box"  v-show="boxCommentVisiable">
 
-                            <div v-for="(item,i) in 3" :key="i">
+                            <div v-for="(item,i) in commentList" :key="i">
                                 <!--上文布局-->
                                 <div>
                                     <div class="comment-logo">
                                         <el-image src="https://pic4.zhimg.com/80/v2-e69b64ffc292924e50d8f3e65602e909_720w.jpg"></el-image>
                                     </div>
                                     <div class="comment-header main-inline">
-                                        <div class="comment-from-id">匿名用户 </div>
-                                        <div class="comment-time">2020-04-29 16:05:29</div>
+                                        <div class="comment-from-id">匿名用户 {{item.userId}} </div>
+                                        <div class="comment-time">{{item.time}}</div>
                                     </div>
 
                                 </div>
@@ -73,12 +73,7 @@
                                 <!--内容-->
                                 <div class="comment-content-layout">
                                     <!--主体-->
-                                    <p>JetBrains may use cookies and my IP address to
-                                        collect individual statistics and to provide me with
-                                        personalized offers and ads subject to the Privacy
-                                        Policy and the Terms of Use. JetBrains may use
-                                        third-party services for this purpose. I can revoke
-                                        my consent at any time by visiting the Opt-Out page.</p>
+                                    <p>{{item.content}}</p>
 
                                     <div>
                                         <el-button class="main-inline font-info" type="text"><i class="el-icon-caret-top mini-item"></i>赞同</el-button>
@@ -89,7 +84,7 @@
                                     </div>
 
                                     <!--部分回复列表-->
-                                    <div v-for="(item2,i) in 3" :key="i">
+                                    <div v-for="(item2,i) in item.replyList.slice(0,3)" :key="i">
                                         <el-divider></el-divider>
                                         <!--信息-->
                                         <div>
@@ -97,16 +92,16 @@
                                                 <el-image src="https://pic4.zhimg.com/80/v2-e69b64ffc292924e50d8f3e65602e909_720w.jpg"></el-image>
                                             </div>
                                             <div class="reply-header main-inline">
-                                                <div class="reply-from-id">匿名用户</div>
+                                                <div class="reply-from-id">匿名用户 {{item2.fromId}}</div>
                                                 <div class="reply-to-id font-info">回复</div>
-                                                <div class="reply-to-id font-info">用户id</div>
-                                                <div class="reply-time">2020-04-29 18:23:57</div>
+                                                <div class="reply-to-id font-info">用户id {{item2.toId}} </div>
+                                                <div class="reply-time">{{item2.time}}</div>
                                             </div>
                                         </div>
 
                                         <!--内容-->
                                         <div class="reply-content-layout">
-                                            <p >JetBrains may use cookies and my IP address</p>
+                                            <p >{{item2.content}}</p>
                                             <div>
                                                 <el-button class="main-inline font-info" type="text"><i class="el-icon-caret-top mini-item"></i>赞同</el-button>
                                                 <el-button class="main-inline font-info" type="text"><i class="el-icon-chat-line-square mini-item"></i>回复</el-button>
@@ -114,7 +109,7 @@
                                         </div>
                                     </div>
 
-                                    <el-button class="main-inline font-info" type="text" @click="showDialogReply(1)">展开其他回复...</el-button>
+                                    <el-button class="main-inline font-info" type="text" @click="showDialogReply(item.id)">展开其他回复...</el-button>
 
                                 </div>
 
@@ -128,9 +123,65 @@
         </div>
 
         <!--更多回复-->
-        <el-dialog title="HelloWorld" :visible.sync="dialogReplyVisible">
-            <el-button @click="dialogReplyVisible = false">取 消</el-button>
+        <el-dialog title="HelloWorld" :visible.sync="dialogReplyVisible" :width="948">
+            <div style="text-align: left">
+                <!--上文布局-->
+                <div>
+                    <div class="comment-logo">
+                        <el-image src="https://pic4.zhimg.com/80/v2-e69b64ffc292924e50d8f3e65602e909_720w.jpg"></el-image>
+                    </div>
+                    <div class="dialog-comment-header main-inline">
+                        <div class="comment-from-id">匿名用户 {{replyData.userId}}</div>
+                        <div class="comment-time">{{replyData.time}}</div>
+                    </div>
+
+                </div>
+
+                <!--内容-->
+                <div class="comment-content-layout">
+                    <!--主体-->
+                    <p>{{replyData.content}}</p>
+
+                    <div>
+                        <el-button class="main-inline font-info" type="text"><i class="el-icon-caret-top mini-item"></i>赞同</el-button>
+                        <el-button class="main-inline font-info" type="text"><i class="el-icon-caret-bottom mini-item"></i>反对</el-button>
+                        <el-button class="main-inline font-info" type="text"><i class="el-icon-chat-line-square mini-item"></i>回复</el-button>
+                        <el-button class="main-inline font-info" type="text"><i class="el-icon-s-flag mini-item"></i>举报</el-button>
+                        <el-button class="main-inline font-info" type="text">更多 <i class="el-icon-more"></i></el-button>
+                    </div>
+
+                    <!--部分回复列表-->
+                    <div v-for="(item2,i) in replyData.replyList" :key="i">
+                        <el-divider></el-divider>
+                        <!--信息-->
+                        <div>
+                            <div class="reply-logo">
+                                <el-image src="https://pic4.zhimg.com/80/v2-e69b64ffc292924e50d8f3e65602e909_720w.jpg"></el-image>
+                            </div>
+                            <div class="dialog-reply-header main-inline">
+                                <div class="reply-from-id">匿名用户 {{item2.fromId}}</div>
+                                <div class="reply-to-id font-info">回复</div>
+                                <div class="reply-to-id font-info">用户id {{item2.toId}}</div>
+                                <div class="reply-time">{{item2.time}}</div>
+                            </div>
+                        </div>
+
+                        <!--内容-->
+                        <div class="reply-content-layout">
+                            <p >{{item2.content}}</p>
+                            <div>
+                                <el-button class="main-inline font-info" type="text"><i class="el-icon-caret-top mini-item"></i>赞同</el-button>
+                                <el-button class="main-inline font-info" type="text"><i class="el-icon-chat-line-square mini-item"></i>回复</el-button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <el-divider></el-divider>
+            </div>
             <el-button type="primary" @click="dialogReplyVisible = false">确 定</el-button>
+            <el-button @click="dialogReplyVisible = false">取 消</el-button>
         </el-dialog>
 
         <!--评论提交-->
@@ -205,8 +256,8 @@
             };
 
             return {
-                data: {},
-                commentData:[],//评论
+                articleData: {},//文章数据
+                commentList:[],//评论列表
                 replyData:{},//单个评论的所有回复
                 boxCommentVisiable: false,//评论
                 dialogReplyVisible: false,//更多回复
@@ -240,7 +291,7 @@
                 _this.$axios.get("http://localhost:8080/article/details/"+_this.$route.params.id)
                     .then(function (data) {
                         console.log(data.data);
-                        _this.data=data.data.data;
+                        _this.articleData=data.data.data;
                     })
             },
 
@@ -337,7 +388,6 @@
         font-size: 14px;
     }
 
-
     /*回复具体*/
     .reply-content-layout{
         margin: 0 60px 0 60px ;
@@ -366,6 +416,15 @@
         margin: 24px -12px 0 0;
         color: gray;
         font-size: 14px;
+    }
+
+    /*对话框 评论 回复*/
+    .dialog-comment-header{
+        width: 810px;
+    }
+
+    .dialog-reply-header{
+        width: 730px;
     }
 
     /*主界面布局*/
