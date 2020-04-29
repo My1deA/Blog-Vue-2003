@@ -24,7 +24,7 @@
                            @current-change="pageNumChange">
             </el-pagination>
         </div>
-       <!-- <router-link :to="{name:'ArticleDetails',params:{id: 1}}"><p>阅读更多</p></router-link>-->
+        <router-link :to="{name:'ArticleDetails',params:{id: 1}}"><p>阅读更多</p></router-link>
         <!--<router-link :to="{path:'/article/articleDetails',query:{id: 1}}"><p>阅读更多</p></router-link>-->
 
     </div>
