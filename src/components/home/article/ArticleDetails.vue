@@ -280,7 +280,7 @@
         },
 
         mounted: function () {
-            //this.loadArticle();
+            this.loadArticle();
         },
 
         methods: {
@@ -292,6 +292,15 @@
                     .then(function (data) {
                         console.log(data.data);
                         _this.articleData=data.data.data;
+                    })
+            },
+
+            /*获取一个评论的所有回复信息*/
+            loadReply:function(id){
+                var _this=this;
+                _this.$axios.get("http://localhost:8080/comment/"+id)
+                    .then(function (data) {
+                        _this.replyData=data.data.data;
                     })
             },
 
@@ -308,14 +317,6 @@
                 //_this.loadReply(id);
             },
 
-            /*获取一个评论的所有回复信息*/
-            loadReply:function(id){
-                var _this=this;
-                _this.$axios.get("http://localhost:8080/comment/"+id)
-                    .then(function (data) {
-                        _this.replyData=data.data.data;
-                    })
-            },
 
 
             /*提交评论*/
