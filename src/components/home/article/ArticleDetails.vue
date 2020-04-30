@@ -115,6 +115,11 @@
 
                                 <el-divider></el-divider>
                             </div>
+
+                            <div class="page-text">
+                                <el-pagination background layout="prev, pager, next" :total="100"  @current-change="handleCurrentChange">
+                                </el-pagination>
+                            </div>
                         </div>
                     </el-collapse-transition>
 
@@ -262,6 +267,9 @@
                 boxCommentVisiable: false,//评论
                 dialogReplyVisible: false,//更多回复
 
+                pageNum:1,//当前页面
+                pageSize:2,//页面信息总数
+
                 //提交评论数据
                 commentForm:{
                     userId:'',
@@ -295,10 +303,19 @@
                     })
             },
 
+            /*获取相应评论*/
+            loadComment:function(){
+              var _this=this;
+              _this.$axios.get("http://localhost:8080/comment/"+_this.$route.params.id+"/"+_this.pageNum+"/"+_this.pageSize)
+                  .then(function (data) {
+                    _this.commentList=data.data.data;
+              })
+            },
+
             /*获取一个评论的所有回复信息*/
             loadReply:function(id){
                 var _this=this;
-                _this.$axios.get("http://localhost:8080/comment/"+id)
+                _this.$axios.get("http://localhost:8080/comment/find/"+id)
                     .then(function (data) {
                         _this.replyData=data.data.data;
                     })
@@ -308,13 +325,14 @@
             showBoxComment: function () {
                 var _this=this;
                 _this.boxCommentVisiable = !_this.boxCommentVisiable;
+                _this.loadComment();
             },
             /*展示所有回复*/
             showDialogReply:function(id){
                 console.log(id);
                 var _this=this;
                 _this.dialogReplyVisible = !_this.dialogReplyVisible;
-                //_this.loadReply(id);
+                _this.loadReply(id);
             },
 
 
@@ -335,6 +353,13 @@
             /*清除输入*/
             clear: function (form) {
                 this.$refs[form].resetField();
+            },
+
+            handleCurrentChange:function(val){
+                var _this=this;
+                _this.pageNum=val;
+                //alert(_this.pageNum);
+                _this.loadComment();
             },
 
             /*qs 提交评论*/
@@ -494,6 +519,11 @@
     }
     .mini-item {
         margin-right:6px;
+    }
+    /*页码中间*/
+    .page-text{
+        display: block;
+        text-align: center;
     }
 
 
