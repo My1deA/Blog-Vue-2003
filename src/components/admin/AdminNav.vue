@@ -29,7 +29,7 @@
                 navList: [
                     {id: 0, index: '/admin/article',msg: '文章列表'},
                     {id: 1, index: '/admin/article/add', msg: '文章发布'},
-                    {id: 2, index: '/admin/article/edit',msg: '文章编辑'},
+                    {id: 2, index: '/admin/article/edit/1',msg: '文章编辑'},
                     {id: 3, index: '/admin/study', icon: 'el-icon-notebook-1', msg: '学习路线'},
                     {id: 4, index: '/admin/role', icon: 'el-icon-s-operation', msg: '用户权限'},
                     {id: 5, index: '/admin/userinfo', icon: 'el-icon-user-solid', msg: '个人信息'}

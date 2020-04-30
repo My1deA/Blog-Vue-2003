@@ -94,11 +94,15 @@
             //查看文章内容
             readArticle:function (index,row) {
                 console.log(index,row);
+                var _this=this;
+                _this.$router.push("/article/details/"+row.id);
             },
 
             //修改文章内容
             editArticle:function (index,row) {
                 console.log(index,row);
+                var _this=this;
+                _this.$router.push("/admin/article/edit/"+row.id);
             },
             //删除文章
             deleteArticle:function (index,row) {
