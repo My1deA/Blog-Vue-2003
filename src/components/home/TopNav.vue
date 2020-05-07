@@ -23,7 +23,7 @@
                         <el-dropdown-item>个人信息</el-dropdown-item>
                         <el-dropdown-item>设置</el-dropdown-item>
                         <el-dropdown-item>关于</el-dropdown-item>
-                        <el-dropdown-item>退出</el-dropdown-item>
+                        <el-dropdown-item @click="logout">退出</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
 
@@ -76,6 +76,18 @@
                 console.log(key, keyPath);
             },
 
+            //退出
+            logout: function () {
+                var _this = this;
+                _this.$axios.get("http://localhost:8080/user/logout")
+                    .then(function (data) {
+                        if(data.data.code === 200){
+                            console.log(_this.$store.state.user.username);
+                            _this.$store.commit('logout');
+                            _this.$router.push("/index");
+                        }
+                })
+            },
 
         }
     }
