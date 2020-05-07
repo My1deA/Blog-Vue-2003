@@ -16,6 +16,9 @@ Vue.prototype.$axios=axios;
 Vue.prototype.$qs=qs;
 Vue.config.productionTip = false;
 
+axios.defaults.withCredentials = true;
+
+
 
 new Vue({
   el: '#app',
