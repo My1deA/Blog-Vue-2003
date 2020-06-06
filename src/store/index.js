@@ -13,7 +13,7 @@ export default new Vuex.Store({
     mutations:{
         login(state,user){
             //登录成功时将用户存入浏览器缓存中
-            state.user=user;
+            state.username=user;
 
             window.localStorage.setItem('user', JSON.stringify(user));
         },
