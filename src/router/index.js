@@ -39,7 +39,7 @@ export default new Router({
             ]
         },
         {
-            path: '/admin', name: 'Admin', component: Admin,
+            path: '/admin', name: 'Admin', component: Admin, //meta:{requireAuth: true},表示要验证
             children: [
                 {path: '/admin/article', name: 'AdminArticle', component: AdminArticle},
                 {path: '/admin/article/add', name: 'AdminArticleAdd', component: AdminArticleAdd},
