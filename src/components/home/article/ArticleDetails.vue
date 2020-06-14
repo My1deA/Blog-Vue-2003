@@ -549,15 +549,35 @@
 </style>
 
 <!--
+   //父组件 接收 子组件 传递的值 showDialogReply是子组件的方法
     <comment-list @showDialogReplyEvent="showDialogReply($event)"></comment-list>
+   //子组件向父组件传值
+    showDialogReply:function(id){
+       this.$emit('showDialogReplyEvent',id);
+    }
+
+   //父组向子组件传值 number=9
+    <child number=9><chid>
+   //子组件
+    //html
+    {{number}}
+    //js
+    data(){
+        return{
+            number:0;
+        }
+    }
 
 
+
+
+    /*定义滑动窗口*/
     <transition name="draw">
         <div class="box"  v-show="isShow">
             <div style="height: 500px"></div>
         </div>
      </transition>
-  /*定义Box*/
+     /*定义Box*/
     .draw-enter-active, .draw-leave-active {
         transition: all 1s ease;
     }
